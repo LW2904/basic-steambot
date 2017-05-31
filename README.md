@@ -4,9 +4,9 @@
 
 Make sure you have NodeJS v6.10.3 or greater installed on your system (`node -v` to check).
 
-In your working directory, do `npm install node-steam-user` to donwload the required module.
+In your working directory, do `npm install node-steam-user` to download the required module.
 
-### First log-om
+### First log-on
 
 Require the module, and define variables:
 ```markdown
