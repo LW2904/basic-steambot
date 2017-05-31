@@ -1,4 +1,4 @@
-Simple, no bullshit, Steam Bot using [NodeJS](https://nodejs.org) and [node-steam-user](https://github.com/DoctorMcKay/node-steam-user).
+### Simple, no bullshit, Steam Bot using [NodeJS](https://nodejs.org) and [node-steam-user](https://github.com/DoctorMcKay/node-steam-user).
 
 ```markdown
 Syntax highlighted code block
