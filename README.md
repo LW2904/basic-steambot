@@ -18,6 +18,15 @@ let data = {
   'password': 'pass'
 }
 ```
+Add the actual log-on function, and output when the account is logged on.
+```markdown
+client.logOn(data);
+
+client.on('loggedOn', () => {
+  console.log('Logged on with account ' + data.accountName);
+  client.setPersona(steamuser.Steam.EPersonaState.Online);
+});
+```
 
 ```markdown
 Syntax highlighted code block
