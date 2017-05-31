@@ -1,4 +1,11 @@
-### Simple, no bullshit steam bot using [NodeJS](https://nodejs.org) and [node-steam-user](https://github.com/DoctorMcKay/node-steam-user).
+## Simple, no bullshit steam bot using [NodeJS](https://nodejs.org) and [node-steam-user](https://github.com/DoctorMcKay/node-steam-user).
+
+### Prerequisites
+
+Make sure you have NodeJS v6.10.3 or greater installed on your system (`node -v` to check).
+
+In your working directory, do `npm install node-steam-user` to donwload the required module.
+
 
 ```markdown
 Syntax highlighted code block
