@@ -1,4 +1,4 @@
-## Simple, no bullshit steam bot using [NodeJS](https://nodejs.org) and [node-steam-user](https://github.com/DoctorMcKay/node-steam-user).
+## Simple steam bot using [NodeJS](https://nodejs.org) and [node-steam-user](https://github.com/DoctorMcKay/node-steam-user).
 
 ### Prerequisites
 
@@ -6,6 +6,18 @@ Make sure you have NodeJS v6.10.3 or greater installed on your system (`node -v`
 
 In your working directory, do `npm install node-steam-user` to donwload the required module.
 
+### First log-om
+
+Require the module, and define variables:
+```markdown
+const steamuser = require('steam-user');
+let client = new steamuser();
+
+let data = {
+  'accountName': 'name',
+  'password': 'pass'
+}
+```
 
 ```markdown
 Syntax highlighted code block
