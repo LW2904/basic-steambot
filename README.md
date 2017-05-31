@@ -1,11 +1,4 @@
-## Building a bot with the Steam API and NodeJS
-
-I am going to be making this bot step-by-step using [node-steam-user](https://github.com/DoctorMcKay/node-steam-user), which is a handler Module of [node-steam](https://github.com/seishun/node-steam) which in turn is a port of [SteamKit2](https://github.com/SteamRE/SteamKit).
-Now, this is mostly just formalities and you won't need to know (or even really understand) this to build this bot so the important thing we should take from this is: we are using node-steam-user as our interface with the steam servers.
-
-### NodeJS
-
-
+Simple, no bullshit, Steam Bot using [NodeJS](https://nodejs.org) and [node-steam-user](https://github.com/DoctorMcKay/node-steam-user).
 
 ```markdown
 Syntax highlighted code block
