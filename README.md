@@ -6,7 +6,12 @@ This is aimed at complete beginners, but even those who know their way around JS
 
 ## Prerequisites
 
-I will be using NodeJS v8.0.0, but this will work on any NodeJS version > 6. You can get [NodeJS](https://nodejs.org/en/) here, and if you already have it installed you can check your version with `node -v`.
+I will be using NodeJS v8.0.0, but this should work on any NodeJS version >6. You can get [NodeJS](https://nodejs.org/en/) here, and if you already have it installed you can check your version with `node -v`.
+
+> *Notes on NodeJS*
+> Node can be used to run JS code in your browser using Chrome's V8 JavaScript Engine.
+> It's package ecosystem, npm, is the largest open source library in the world and can be used to
+> instantly download und integrate a plethora of modules into your projects.
 
 Once you have made sure that node is installed and up-to-date, fire up cmd and navigate into your working directory with `cd X:/path/to/narnia/`.
 Once there, create a .js file - the name is up to you but names like *index.js* or *main.js* are common.
