@@ -45,9 +45,7 @@
               at <span class="date">{{ record.commit.author.date | formatDate }}</span>
             </li>
           </ul> -->
-          <p v-for="record in commits">
-            {{ record }}
-          </p>
+          <record v-for="record in commits" :record="record"></record>
         </div>
       </header>
       <section>
@@ -68,6 +66,13 @@
       console.log('loaded')
 
       let apiURL = 'https://api.github.com/repos/lw2904/basic-steambot/commits?per_page=9&sha='
+
+      Vue.component('record', {
+        props: ['record'],
+        template: `
+          <p>{{ record.commit.message }}</p>
+        `
+      })
 
       const app = new Vue({
         el: '#app',
@@ -98,10 +103,9 @@
         },
         mounted() {
           console.log('mounted')
-        },
-        created: function () {
           this.fetchData()
-        }
+        },
+        created: function () {}
       })
     </script>
 
