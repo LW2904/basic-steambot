@@ -31,14 +31,10 @@ This code will run as-is - congratulations, you are now in possesion of a (very 
 
 ### What now?
 
-- Chatbot to monitor steam services status.
-- More examples to come.
+The `client` variable now holds a `SteamClient` object which has loads of [properties](https://github.com/DoctorMcKay/node-steam-user#properties-) and [methods](https://github.com/DoctorMcKay/node-steam-user#methods-).
 
-## Simple Chatbot
-
-Accept all incoming friend requests, like every public bot should/does.
+You could, for example, now tell steam that you are playing games, by using the [gamesPlayed](https://github.com/DoctorMcKay/node-steam-user#gamesplayedapps-force) method:
 ```markdown
-client.on('friendRelationship', id => client.addFriend(id))
+client.gamesPlayed(["non-steam game", 730, 440])
 ```
-When a chat message with the text 'status' comes, send a request to the steamgaug.es API and send messages based on the response.
-```
+...
