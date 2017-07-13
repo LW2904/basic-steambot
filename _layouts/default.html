@@ -46,7 +46,7 @@
             </li>
           </ul> -->
           <p v-for="record in commits">
-            {{ record.sha.slice(0, 7) }} - {{ record.commit.message}} by: {{ record.commit.author.name }}
+            {{ record }}
           </p>
         </div>
       </header>
