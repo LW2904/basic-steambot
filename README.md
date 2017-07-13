@@ -40,13 +40,13 @@ The above code utilizes *callbacks* to achieve *asynchronicity*. In practice, th
 An example use case:
 ```javascript
 function execute(callback) { setTimeout(callback, 1000) }
-// setTimeout takes a function as first argument which it executes once
-// after the amount of miliseconds defined in the second argument.
+// setTimeout(f, m)
+// executes function f once after m miliseconds
 
 execute(function () { console.log('Function finished.') })
 ```
 
-It takes a while to grasp, but it's a really simple concept. When you can pass variables why not pass functions.
+It takes a while to grasp, but it's a really simple concept. When you can pass variables why not pass functions?
 
 ### Arrow functions
 
@@ -60,8 +60,8 @@ client.on('loggedOn', () => { console.log( ... ) })
 // which is the same as:
 client.on('loggedOn', function () { console.log( ... ) })
 
-// a convenient thing about the arrow syntax is, is that as long as
-// a function takes only one parameter you can write it like this:
+// as long as a function only takes one parameter,
+// you can omit the parenthesis
 client.on('loggedOn', details => console.log(details))
 ```
 *Arrow functions are a new technology and part of ES6.*
