@@ -23,7 +23,7 @@
         {% if site.github.is_project_page %}
           <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
 
-          <div id="app">
+          <div id="app" style="all: unset">
             <ul>
               <li v-for="record in commits">
                 <a :href="record.html_url" target="_blank" class="commit">{{ record.sha.slice(0, 7) }}</a>
