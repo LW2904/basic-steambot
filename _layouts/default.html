@@ -95,6 +95,9 @@
         },
         mounted() {
           console.log('mounted')
+        },
+        created: function () {
+          this.fetchData()
         }
       })
     </script>
