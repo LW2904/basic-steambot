@@ -22,6 +22,17 @@
 
         {% if site.github.is_project_page %}
           <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ github_name }}</small></a></p>
+
+          <div id="app">
+            <ul>
+              <li v-for="record in commits">
+                <a :href="record.html_url" target="_blank" class="commit">{{ record.sha.slice(0, 7) }}</a>
+                - <span class="message">{{ record.commit.message | truncate}}</span><br>
+                by <span class="author"><a :href="record.author.html_url" target="_blank">{{ record.commit.author.name }}</a></span>
+                at <span class="date">{{ record.commit.author.date | formatDate }}</span>
+              </li>
+            </ul>
+          </div>
         {% endif %}
 
         {% if site.github.is_user_page %}
@@ -35,17 +46,6 @@
             <li><a href="{{ site.github.repository_url }}">View On <strong>GitHub</strong></a></li>
           </ul>
         {% endif %}
-
-        <div id="app">
-          <ol>
-            <li v-for="record in commits">
-              <a :href="record.html_url" target="_blank" class="commit">{{ record.sha.slice(0, 7) }}</a>
-              - <span class="message">{{ record.commit.message | truncate}}</span><br>
-              by <span class="author"><a :href="record.author.html_url" target="_blank">{{ record.commit.author.name }}</a></span>
-              at <span class="date">{{ record.commit.author.date | formatDate }}</span>
-            </li>
-          </ol>
-        </div>
       </header>
       <section>
 
