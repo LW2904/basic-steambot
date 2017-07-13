@@ -37,7 +37,14 @@
         {% endif %}
 
         <div id="app">
-
+          <ol>
+            <li v-for="record in commits">
+              <a :href="record.html_url" target="_blank" class="commit">{{ record.sha.slice(0, 7) }}</a>
+              - <span class="message">{{ record.commit.message | truncate}}</span><br>
+              by <span class="author"><a :href="record.author.html_url" target="_blank">{{ record.commit.author.name }}</a></span>
+              at <span class="date">{{ record.commit.author.date | formatDate }}</span>
+            </li>
+          </ol>
         </div>
       </header>
       <section>
@@ -57,9 +64,35 @@
     <script>
       console.log('loaded')
 
+      let apiURL = 'https://api.github.com/repos/lw2904/basic-steambot/commits?per_page=9&sha='
+
       const app = new Vue({
         el: '#app',
-        data: {},
+        data: {
+          currentBranch: 'master',
+          commits: null
+        },
+        filters: {
+          truncate: function (v) {
+            let newline = v.indexOf('\n')
+            return newline > 0 ? v.slice(0, newline) : v
+          },
+          formatDate: function (v) {
+            return v.replace(/T|Z/g, ' ')
+          }
+        },
+        methods: {
+          fetchData: function () {
+            let xhr = new XMLHttpRequest()
+            let self = this
+            xhr.open('GET', apiURL + self.currentBranch)
+            xhr.onload = function () {
+              self.commits = JSON.parse(xhr.responseText)
+              console.log(self.commits[0].html_url)
+            }
+            xhr.send()
+          }
+        },
         mounted() {
           console.log('mounted')
         }
