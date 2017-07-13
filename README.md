@@ -24,13 +24,14 @@ client.logOn() // Log on anonymously.
 client.on('loggedOn', () =>
   console.log('Logged into steam anonymously.'))
 ```
+*Note: semicolons in JS are a funny affair, but the rule of thumb is that you can omit them all as long as all statements are followed by a line brak - which is what I'm doing here.*
 
 Well that was simple, wasn't it? Still, let's go over the key parts:
 
 ### require('steam-user')
-loads a module, in this case the `steam-user` module which can be installed with `npm install -g steam-user` in the console (only add the -g if you wish to install this globally).
+*Require* is a NodeJS-native function which loads a module, in this case the `steam-user` module which can be installed with `npm install -g steam-user` in the console.
 
-That module has a set of *methods* and *properties* as described [here](https://github.com/DoctorMcKay/node-steam-user#steamuser) and is our 'gateway' to steam. It was created and is maintained by [DoctorMcKay](https://github.com/DoctorMcKay).
+That module has a set of *methods* and *properties* as described in it's [documentation](https://github.com/DoctorMcKay/node-steam-user#steamuser) and is our 'gateway' to steam. It was created and is maintained by [DoctorMcKay](https://github.com/DoctorMcKay).
 
 We then initialize an 'empty' SteamUser as `client`, which - in the future - will be our bot.
 
@@ -40,18 +41,20 @@ The above code utilizes *callbacks* to achieve *asynchronicity*. In practice, th
 
 An example use case:
 ```javascript
-function execute(callback) { setTimeout(callback, 1000) }
-// setTimeout(f, m)
+// Create new function execute(cb)
+function execute (callback) { setTimeout(callback, 1000) }
+// setTimeout(f, m):
 // executes function f once after m miliseconds
 
 execute(function () { console.log('Function finished.') })
+// Output after 1 second (1000ms): Function finished
 ```
 
 It takes a while to grasp, but it's a really simple concept. When you can pass variables why not pass functions?
 
 ### Arrow functions
 
-What might throw off even people who are familiar with JS is the arrow function shorthand ([MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions)).
+What might throw off even people who are familiar with JS is the arrow function shorthand (read more here: [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions)).
 
 To better understand arrow functions consider this:
 ```javascript
