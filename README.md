@@ -21,7 +21,8 @@ let client = new SteamUser() // Our to-be bot.
 
 client.logOn() // Log on anonymously.                           
 
-client.on('loggedOn', () => console.log(`Logged into steam anonymously.`))
+client.on('loggedOn', () =>
+  console.log('Logged into steam anonymously.'))
 ```
 
 Well that was simple, wasn't it? Still, let's go over the key parts:
