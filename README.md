@@ -28,7 +28,8 @@ client.on('loggedOn', () =>
 ```
 *Note: semicolons in JS are a funny affair, but the rule of thumb is that you can omit them all as long as all statements are followed by a line brak - which is what I'm doing here.*
 
-Well that was simple, wasn't it? Still, let's go over the key parts:
+We now have an anonymous connection to steam, which we could use to obtain data like steam profiles, or steam store information.
+The next step is logging into an actual account (our bot), but let's first go over the key parts of the above code:
 
 ### require('steam-user')
 *Require* is a NodeJS-native function which loads a module, in this case the `steam-user` module which can be installed with `npm install -g steam-user` in the console.
@@ -39,7 +40,9 @@ We then initialize an 'empty' SteamUser as `client`, which - in the future - wil
 
 ### Callbacks
 
-The above code utilizes *callbacks* to achieve *asynchronicity*. In practice, this means that callbacks allow us to define a function that is executed when a particular operation finishes. In our case we wait for the client to emit the `loggedOn` event after which we execute a function that we pass as the 2nd argument.
+The above code utilizes *callbacks* to achieve *asynchronicity*. It is important to note though, that there isn't a special thing called a 'callback' in the JavaScript language, it's just a convention for using JS functions. Instead of immediately returning some result like most functions, functions that use callbacks take some time to produce a result.
+
+In practice, this means that callbacks allow us to define a function that is executed when a particular operation finishes. In our case we wait for the client to emit the `loggedOn` event after which we execute a function that we pass as the 2nd argument.
 
 An example use case:
 ```javascript
