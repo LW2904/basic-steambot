@@ -11,17 +11,21 @@
 			font-weight: bold;
 		}
 
+		nav {
+			margin-top: 20px;
+		}
+
 		#app {
 			margin-top: 50px;
 		}
 
-		#infobox {
-			margin-top: 25px;
-			margin-left: 4em;
-		}
+		#infobox { margin-left: 4em; }
 
-		.list-group {
-			margin-top: 25px;
+		#body {
+			margin-top: 5px;
+			padding: 15px;
+		} #body form {
+			margin-bottom: 1em;
 		}
 	</style>
 
@@ -31,16 +35,22 @@
   <div id="app" class="container">
 		<h1>commit history <small>for basic-steambot</small></h1>
 
+		<nav class="breadcrumb">
+			<a class="breadcrumb-item" href="..">Home</a>
+			<span class="breadcrumb-item active">Commits</span>
+		</nav>
+
 		<div class="alert alert-info" v-if="loading">Waiting for GitHub API.</div>
 		<div class="alert alert-danger" v-if="error">Error encountered when fetching data: {{ error }}. Retrying in 10 seconds...</div>
 
-		<form class="form-inline">
-			<label class="mr-sm-2">Number of commits to load: </label>
-			<input v-model="amount" type="text" class="form-control col-1" placeholder="6">
-		</form>
 
-		<div class="row">
+		<div class="row" id="body">
 			<div class="list-group col-5">
+				<form class="form-inline">
+					<label class="mr-sm-2">Number of commits to load: </label>
+					<input v-model="amount" type="text" class="form-control col-1" placeholder="6">
+				</form>
+
 				<commit-item v-for="record in commits" :record="record"></commit-item>
 			</div>
 
