@@ -8,12 +8,12 @@ This is aimed at complete beginners, but even those who know their way around JS
 
 I will be using NodeJS v8.0.0, but this should work on any NodeJS version >6. You can get [NodeJS](https://nodejs.org/en/) here, and if you already have it installed you can check your version with `node -v`.
 
-> Node can be used to run JS code in your browser using Chrome's V8 JavaScript Engine. It's package ecosystem, npm, is the largest open source library in the world and can be used to instantly download und integrate a plethora of modules into your projects.
+> Node can be used to run JS code in your console using Chrome's V8 JavaScript Engine. It's package ecosystem, npm, is the largest open source library in the world and can be used to instantly download und integrate a plethora of modules into your projects.
 
 Once you have made sure that node is installed and up-to-date, fire up cmd and navigate into your working directory with `cd X:/path/to/narnia/`.
-Once there, create a file *<name>.js* - the name is up to you but names like *index.js* or *main.js* are common.
+Once there, create a file *whatever.js* - the name is up to you but names like *index.js* or *main.js* are common.
 Using your text-editor of choice (personal recommendation: [atom](https://atom.io/)) open up the file and write `console.log('Hello World!')`.
-Now, in your console, write `node <name>.js`. The output should be a single line saying `Hello World!`, after which the script exits.
+Now, in your console, write `node yourName.js`. The output should be a single line saying `Hello World!`, after which the script exits.
 Proceed only if you have verified that this works.
 
 ## First log-in
@@ -78,7 +78,7 @@ client.on('loggedOn', details => console.log(details))
 ```
 *Arrow functions are a new technology and part of ES6.*
 
-## Expanding the code
+## Actual log-in
 
 Now that you are somewhat familiar with the `steam-user` module, we can finally log into steam using an actual account!
 
