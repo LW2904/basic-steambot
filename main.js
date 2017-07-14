@@ -1,7 +1,35 @@
-const SteamUser = require('steam-user')
+// npm install -g steam-user
+const steamUser = require('steam-user')
 
-let client = new SteamUser() // Our to-be bot.
+// No need to install this
+const readline = require('readline').createInterface({
+	input: process.stdin,
+  output: process.stdout
+})
 
-client.logOn() // Log on anonymously.
+let client = new steamUser()
+// We want to handle the code by ourselves
+client.setOption('promptSteamGuardCode', false)
 
-client.on('loggedOn', () => console.log(`Logged into steam anonymously.`))
+// Replace the below values with your data,
+// or use the testing account provided by me.
+let accountData = {
+	accountName: 'luisregueiro',
+	password: '4959516780'
+}
+
+client.logOn(accountData)
+
+// Event which is emmited once steam needs a code
+client.on('steamGuard', (domain, callback) => {
+	readline.question((domain ? 'EMail' : 'Mobile') + ' code: ', code => {
+		callback(code)
+		readline.close()
+	})
+})
+
+client.on('error', err => console.log(err))
+
+client.on('loggedOn', () => {
+	console.log('logged on')
+})

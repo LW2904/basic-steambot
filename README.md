@@ -1,4 +1,4 @@
-# An introduction to Steam Bots and JS as a whole.
+# An introduction to building Steam Bots and JS as a whole.
 
 This is aimed at complete beginners, but even those who know their way around JS and want to get into building Bots using Steam can benefit from reading this.
 
@@ -11,17 +11,17 @@ I will be using NodeJS v8.0.0, but this should work on any NodeJS version >6. Yo
 > Node can be used to run JS code in your browser using Chrome's V8 JavaScript Engine. It's package ecosystem, npm, is the largest open source library in the world and can be used to instantly download und integrate a plethora of modules into your projects.
 
 Once you have made sure that node is installed and up-to-date, fire up cmd and navigate into your working directory with `cd X:/path/to/narnia/`.
-Once there, create a .js file - the name is up to you but names like *index.js* or *main.js* are common.
+Once there, create a file *<name>.js* - the name is up to you but names like *index.js* or *main.js* are common.
 Using your text-editor of choice (personal recommendation: [atom](https://atom.io/)) open up the file and write `console.log('Hello World!')`.
-Now, in your console, write `node <your filename>.js`. The output should be a single line saying `Hello World!` after which the script exits.
+Now, in your console, write `node <name>.js`. The output should be a single line saying `Hello World!`, after which the script exits.
 Proceed only if you have verified that this works.
 
 ## First log-in
 
 ```javascript
-const SteamUser = require('steam-user')
+const steamUser = require('steam-user')
 
-let client = new SteamUser() // Our to-be bot.
+let client = new steamUser() // Our to-be bot.
 
 client.logOn() // Log on anonymously.                           
 
@@ -30,16 +30,16 @@ client.on('loggedOn', () =>
 ```
 *Note: semicolons in JS are a funny affair, but the rule of thumb is that you can omit them all as long as all statements are followed by a line break - which is what I'm doing here.*
 
-We now have an anonymous connection to steam, which we could use to obtain data like steam profiles, or steam store information.
+With the above code, we would have an anonymous connection to steam, which we could use to obtain data like steam profiles, or steam store information - anything you could do without an account.
 The next step is logging into an actual account (our bot), but let's first go over the key parts of the above code:
 
 ### require('steam-user')
-*Require* is a NodeJS-native function which loads a module, in this case it loads `steam-user`. These modules are a key part of NodeJS, and while you can write them yourself, millions of them can be found online and via the Node Package Manager (NPM). `steam-user` is a public module which can be downloaded and installed using NPM:
+*Require* is a NodeJS-native function which loads a module, in this case it loads `steam-user`. These modules are a key part of NodeJS, and while you can write them yourself, millions of them can be found and installed via the Node Package Manager ([NPM](https://www.npmjs.com/)). `steam-user` is a public module which can be downloaded and installed using NPM:
 `npm install -g steam-user` *The -g tag installs this module globally, omit it if you want the module to be installed locally.*
 
 That module has a set of *methods* and *properties* as described in it's [documentation](https://github.com/DoctorMcKay/node-steam-user#steamuser) and is our 'gateway' to steam. It was created and is maintained by [DoctorMcKay](https://github.com/DoctorMcKay).
 
-Using the modules constructor function, we then initialize an 'empty' SteamUser as `client`, which - in the future - will be our bot.
+Using the modules constructor function, we initialize an 'empty' SteamUser object as `client`, which - in the future - will be our bot.
 
 ### Callbacks
 
@@ -77,3 +77,48 @@ client.on('loggedOn', function () { console.log( ... ) })
 client.on('loggedOn', details => console.log(details))
 ```
 *Arrow functions are a new technology and part of ES6.*
+
+## Expanding the code
+
+Now that you are somewhat familiar with the `steam-user` module, we can finally log into steam using an actual account!
+
+I will now throw some code at your feet, and we will then go over it piece by piece.
+
+```javascript
+// npm install -g steam-user
+const steamUser = require('steam-user')
+
+// No need to install this
+const readline = require('readline').createInterface({
+	input: process.stdin,
+  output: process.stdout
+})
+
+let client = new steamUser()
+// We want to handle the code by ourselves
+client.setOption('promptSteamGuardCode', false)
+
+// Replace the below values with your data,
+// or use the testing account provided by me.
+let accountData = {
+	accountName: 'fsoc10',
+	password: '2GFiWQDF4V'
+}
+
+client.logOn(accountData)
+
+// Event which is emmited once steam needs a code
+// Domain is only defined when email is needed
+client.on('steamGuard', (domain, callback) => {
+	readline.question((domain ? 'EMail' : 'Mobile') + ' code: ', code => {
+		callback(code)
+		readline.close()
+	})
+})
+
+client.on('error', err => console.log(err))
+
+client.on('loggedOn', () => {
+	console.log('logged on')
+})
+```
