@@ -28,27 +28,28 @@ client.logOn() // Log on anonymously.
 client.on('loggedOn', () =>
   console.log('Logged into steam anonymously.'))
 ```
-*Note: semicolons in JS are a funny affair, but the rule of thumb is that you can omit them all as long as all statements are followed by a line brak - which is what I'm doing here.*
+*Note: semicolons in JS are a funny affair, but the rule of thumb is that you can omit them all as long as all statements are followed by a line break - which is what I'm doing here.*
 
 We now have an anonymous connection to steam, which we could use to obtain data like steam profiles, or steam store information.
 The next step is logging into an actual account (our bot), but let's first go over the key parts of the above code:
 
 ### require('steam-user')
-*Require* is a NodeJS-native function which loads a module, in this case the `steam-user` module which can be installed with `npm install -g steam-user` in the console.
+*Require* is a NodeJS-native function which loads a module, in this case it loads `steam-user`. These modules are a key part of NodeJS, and while you can write them yourself, millions of them can be found online and via the Node Package Manager (NPM). `steam-user` is a public module which can be downloaded and installed using NPM:
+`npm install -g steam-user` *The -g tag installs this module globally, omit it if you want the module to be installed locally.*
 
 That module has a set of *methods* and *properties* as described in it's [documentation](https://github.com/DoctorMcKay/node-steam-user#steamuser) and is our 'gateway' to steam. It was created and is maintained by [DoctorMcKay](https://github.com/DoctorMcKay).
 
-We then initialize an 'empty' SteamUser as `client`, which - in the future - will be our bot.
+Using the modules constructor function, we then initialize an 'empty' SteamUser as `client`, which - in the future - will be our bot.
 
 ### Callbacks
 
 The above code utilizes *callbacks* to achieve *asynchronicity*. It is important to note though, that there isn't a special thing called a 'callback' in the JavaScript language, it's just a convention for using JS functions. Instead of immediately returning some result like most functions, functions that use callbacks take some time to produce a result.
 
-In practice, this means that callbacks allow us to define a function that is executed when a particular operation finishes. In our case we wait for the client to emit the `loggedOn` event after which we execute a function that we pass as the 2nd argument.
+In practice, this means that callbacks allow us to define a function that is executed when a particular operation finishes. In our case we wait for the client to emit the `loggedOn` event after which we execute a function that we pass as the 2nd argument. *More such events can be found in the module docs.*
 
 An example use case:
 ```javascript
-// Create new function execute(cb)
+// Create new function execute(function)
 function execute (callback) { setTimeout(callback, 1000) }
 // setTimeout(f, m):
 // executes function f once after m miliseconds
