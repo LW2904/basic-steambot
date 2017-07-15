@@ -140,7 +140,7 @@ let sunny = false
 console.log('It is ' + (sunny ? 'sunny.' : 'not sunny.'))
 // It is not sunny.
 ```
-...and here's the practical apllication:
+...and here's the ternary operator in action:
 ```javascript
 client.on('steamGuard', (domain, callback) => {
 	readline.question((domain ? 'EMail' : 'Mobile') + ' code: ', code => {
