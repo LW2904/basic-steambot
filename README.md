@@ -140,7 +140,15 @@ let sunny = false
 console.log('It is ' + (sunny ? 'sunny.' : 'not sunny.'))
 // It is not sunny.
 ```
-
+...and here's the practical apllication:
+```javascript
+client.on('steamGuard', (domain, callback) => {
+	readline.question((domain ? 'EMail' : 'Mobile') + ' code: ', code => {
+		callback(code)
+		readline.close()
+	})
+})
+```
 Now, in the above case, the domain variable does only have a value if
 steam requires an email code, and not a mobile code. If steam doesn't need an
 email code the value will be `undefined` which JS treats like `false`.
@@ -154,4 +162,4 @@ Some more stuff to read to properly understand the above code and how to re-use 
 - [this guide](http://callbackhell.com/) to writing async JS
 
 Woo you made it! If you have any feedback hit me up on [steam](http://steamcommunity.com/profiles/76561198091491690)
-so that we can have a chat. 
+so that we can have a chat.
