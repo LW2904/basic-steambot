@@ -82,7 +82,7 @@ client.on('loggedOn', details => console.log(details))
 
 Now that you are somewhat familiar with the `steam-user` module, we can finally log into steam using an actual account!
 
-I will now throw some code at your feet, and we will then go over it piece by piece.
+I will now throw some code at your feet, but I've commented all the important parts.
 
 ```javascript
 // npm install -g steam-user
@@ -95,7 +95,7 @@ const readline = require('readline').createInterface({
 })
 
 let client = new steamUser()
-// We want to handle the code by ourselves
+// We want to handle the code by ourselves.
 client.setOption('promptSteamGuardCode', false)
 
 // Replace the below values with your data,
@@ -120,5 +120,38 @@ client.on('error', err => console.log(err))
 
 client.on('loggedOn', () => {
 	console.log('logged on')
+  // Client/Bot is now ready
 })
 ```
+
+The only new concept in the above code is the `readline` module, which we use to
+get the email/mobile code. It is a part of the core library and we don't have to
+download it using NPM. The documentation can be found [here](https://nodejs.org/api/readline.html).
+
+If you paid attention while reading the code you will also have noticed the
+*ternary operator* ([MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)).
+
+Consider the following example:
+```javascript
+// condition ? expr1 : expr2 is comparable to
+// if (condition) { epr1 } else { expr2 }
+
+let sunny = false
+console.log('It is ' + (sunny ? 'sunny.' : 'not sunny.'))
+// It is not sunny.
+```
+
+Now, in the above case, the domain variable does only have a value if
+steam requires an email code, and not a mobile code. If steam doesn't need an
+email code the value will be `undefined` which JS treats like `false`.
+
+Therefore, if the domain variable is defined the user is asked to provide
+their email code, else (if the value is undefined) the mobile code is requested.
+
+Some more stuff to read to properly understand the above code and how to re-use it:
+- `node-steam-user` [*events*](https://github.com/DoctorMcKay/node-steam-user#events-) like 'steamGuard' or 'error'
+- the `readline` [documentation](https://nodejs.org/api/readline.html)
+- [this guide](http://callbackhell.com/) to writing async JS
+
+Woo you made it! If you have any feedback hit me up on [steam](http://steamcommunity.com/profiles/76561198091491690)
+so that we can have a chat. 
