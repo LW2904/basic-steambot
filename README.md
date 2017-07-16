@@ -31,7 +31,13 @@ client.on('loggedOn', () =>
 *Note: semicolons in JS are a funny affair, but the rule of thumb is that you can omit them all as long as all statements are followed by a line break - which is what I'm doing here.*
 
 With the above code, we would have an anonymous connection to steam, which we could use to obtain data like steam profiles, or steam store information - anything you could do without an account.
-The next step is logging into an actual account (our bot), but let's first go over the key parts of the above code:
+The next step is logging into an actual account (our bot), but let's first go over the key parts of the above code and the
+technologies that I used:
+
+### let/const
+
+To understand the importance of `let`, one must understand *scope*. There are many
+technical details about this, and I will provide you 
 
 ### require('steam-user')
 *Require* is a NodeJS-native function which loads a module, in this case it loads `steam-user`. These modules are a key part of NodeJS, and while you can write them yourself, millions of them can be found and installed via the Node Package Manager ([NPM](https://www.npmjs.com/)). `steam-user` is a public module which can be downloaded and installed using NPM:
