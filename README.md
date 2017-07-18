@@ -34,11 +34,6 @@ With the above code, we would have an anonymous connection to steam, which we co
 The next step is logging into an actual account (our bot), but let's first go over the key parts of the above code and the
 technologies that I used:
 
-### let/const
-
-To understand the importance of `let`, one must understand *scope*. There are many
-technical details about this, and I will provide you 
-
 ### require('steam-user')
 *Require* is a NodeJS-native function which loads a module, in this case it loads `steam-user`. These modules are a key part of NodeJS, and while you can write them yourself, millions of them can be found and installed via the Node Package Manager ([NPM](https://www.npmjs.com/)). `steam-user` is a public module which can be downloaded and installed using NPM:
 `npm install -g steam-user` *The -g tag installs this module globally, omit it if you want the module to be installed locally.*
