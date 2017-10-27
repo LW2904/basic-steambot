@@ -6,11 +6,11 @@ I say this, because I want to make it clear here that I am not trying to teach y
 
 I want to encourage you to use external resources while reading this document, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice.
 
-### The basics
+## The basics
 
 Even I am not cruel enough to expect you to be able to understand some random code, so here goes my take at demistifying this whole thing.
 
-####Browser console
+###Browser console
 
 If you are in a browser, just press __F12__ and switch to the __Console__ tab. This should work in all recent versions of Chrome (Chromium), Firefox, and virtually any browsers that sprang out of those two.
 
@@ -22,7 +22,7 @@ While this is pretty fun to play around with, and also great to learn new things
 
 Now, we could write a quick website and run our JavaScript via that (which is how it is usually used), but that's a bigger detour than I would like - we are going to use __NodeJS__ ([download](https://nodejs.org/dist/v8.8.1/node-v8.8.1-x64.msi)) to run our code. This will also be convenient later, when we will begin development of the steam bot.
 
-####NodeJS
+###NodeJS
 
 > Node.js® is a JavaScript runtime built on [Chrome's V8 JavaScript engine](https://developers.google.com/v8/). Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, [npm](https://www.npmjs.com/), is the largest ecosystem of open source libraries in the world.
 
@@ -34,7 +34,7 @@ Once you've installed Node, go ahead and fire up a console (fastest way: Win + R
 
 As you can see, in it's base form, NodeJS is just like the console tab you had open just a minute ago. (Which is not surprising, since it's pretty much the same thing, only built to run standalone.) OK, this  is pretty cool and all, but we want to get into making scripts, that run using NodeJS, don't we? Well, here goes.
 
-#### First scripts
+### First scripts
 
 To get started, just create a file in any directory you want and name it `index.js`. The name isn't really important, and this is just a suggestion.
 
@@ -86,7 +86,7 @@ __A note on different ways to declare functions:__ There is no consistent standa
 
 Still here? OK, let's try something a bit more complex, then.
 
-### The Bot
+## The Bot
 
 Let me just throw this piece of code at you. When run, it will create and initialize an object that will serve as our bot later on. But, for now, let's go through this piece by piece.
 
@@ -129,7 +129,7 @@ client.on('loggedOn', () => {
 })
 ```
 
-#### Modules
+### Modules
 
 Official documentation of the Modules API can be found [here](https://nodejs.org/api/modules.html). I will summarize the points that are important to us here, though.
 
@@ -161,7 +161,7 @@ All modules are open source, and you can browse them [here](https://www.npmjs.co
 
 Note that some modules that can be `require`d do not have to be installed, like `readline`, which is a Node core module.
 
-#### Objects
+### Objects
 
 Objects in JavaScript, just as in many other programming languages, can be compared to objects in real life. The concept of objects in JavaScript can be understood with real life, tangible objects.
 
@@ -171,7 +171,7 @@ A JavaScript object has properties associated with it. A property of an object c
 
 `myObject.propertyName`
 
-#### Events and Callbacks
+### Events and Callbacks
 
 JavaScript is an event-driven language. That's an interesting concept, and since there are many great articles on this I don't really want to spend too much time on it here. 
 
