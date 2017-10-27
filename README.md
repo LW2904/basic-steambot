@@ -10,7 +10,7 @@ I want to encourage you to use external resources while reading this document, n
 
 Even I am not cruel enough to expect you to be able to understand some random code, so here goes my take at demistifying this whole thing.
 
-###Browser console
+### Browser console
 
 If you are in a browser, just press __F12__ and switch to the __Console__ tab. This should work in all recent versions of Chrome (Chromium), Firefox, and virtually any browsers that sprang out of those two.
 
@@ -22,7 +22,7 @@ While this is pretty fun to play around with, and also great to learn new things
 
 Now, we could write a quick website and run our JavaScript via that (which is how it is usually used), but that's a bigger detour than I would like - we are going to use __NodeJS__ ([download](https://nodejs.org/dist/v8.8.1/node-v8.8.1-x64.msi)) to run our code. This will also be convenient later, when we will begin development of the steam bot.
 
-###NodeJS
+### NodeJS
 
 > Node.js® is a JavaScript runtime built on [Chrome's V8 JavaScript engine](https://developers.google.com/v8/). Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, [npm](https://www.npmjs.com/), is the largest ecosystem of open source libraries in the world.
 
@@ -157,7 +157,7 @@ To use it simply execute `npm install <module name>` in your working directory, 
 const module = require('module name')
 ```
 
-All modules are open source, and you can browse them [here](https://www.npmjs.com/search?q=). 
+All modules are open source, and you can browse them [here](https://www.npmjs.com/search?q=).
 
 Note that some modules that can be `require`d do not have to be installed, like `readline`, which is a Node core module.
 
@@ -173,7 +173,7 @@ A JavaScript object has properties associated with it. A property of an object c
 
 ### Events and Callbacks
 
-JavaScript is an event-driven language. That's an interesting concept, and since there are many great articles on this I don't really want to spend too much time on it here. 
+JavaScript is an event-driven language. That's an interesting concept, and since there are many great articles on this I don't really want to spend too much time on it here.
 
 In the above example we have it easy, since we will not be creating events, just listening to them with the `on()` function of the client object. Which brings us to callbacks, which are yet another very interesting concept to understand. Since it's an integral part to... well, virtually everything in JS, I will attempt to illustrate it.
 
@@ -188,7 +188,7 @@ function request (url, callback) {
 request('https://fsoc.space', function (result) { console.log(result) })
 ```
 
-`setTimeout(t, f, a)` will call the function `f` after `t` miliseconds with the arguments `a`. After 
+`setTimeout(t, f, a)` will call the function `f` after `t` miliseconds with the arguments `a`. After
 
 This works, because you are passing a function as an argument to another function. The called function then calls the function you passed to it, simply called `callback`, in this example.
 
