@@ -65,7 +65,7 @@ This produces the exact same result, but it introcudes two new concepts:
 
 I've added links to the relevant MDN article(s), respectively - I recommend you at least skim them, you will be using variables and functions all the time. I will not go into detail about these things here, but it is imperative that you understand the use of the above two before continuing.
 
-Things that MDN does not cover (or, at least, only covers insufficiently) are best-practises, in this case it's a best practise to use `const` as often as possible, and to use `let` where it is not. This is to prevent unintended changes of variables that should remain constant, and to improve readability. When you define a `const` it is instantly apparent that it's value *will not change.*
+Things that MDN does not cover (or, at least, only covers insufficiently) are best-practices, in this case it's a best practise to use `const` as often as possible, and to use `let` where it is not. This is to prevent unintended changes of variables that should remain constant, and to improve readability. When you define a `const` it is instantly apparent that it's value *will not change.*
 
 ```javascript
 const name = 'elliot' // Is the unchangeable version of...
@@ -88,12 +88,12 @@ Still here? OK, let's try something a bit more complex, then.
 
 ### The Bot
 
-We will be using __modules__ to create our bot, as it will allow for a very quick and convenient setup. Consider the following code, and note the use of `require`.
+Let me just throw this piece of code at you. When run, it will create and initialize an object that will serve as our bot later on. But, for now, let's go through this piece by piece.
 
 ```javascript
 // npm install -g steam-user
 const SteamUser = require('steam-user')
-const Client = new SteamUser()
+const client = new SteamUser()
 
 // No need to install this.
 const readline = require('readline').createInterface({
@@ -115,7 +115,7 @@ client.logOn(accountData)
 // Event which is emitted once steam needs a code.
 // Domain is only defined when email is needed.
 client.on('steamGuard', (domain, callback) => {
-	readline.question((domain ? 'EMail' : 'Mobile') + ' code: ', code => {
+	readline.question((domain ? `EMail (@${domain})` : 'Mobile') + ' code: ', code => {
 		callback(code)
 		readline.close()
 	})
@@ -129,3 +129,79 @@ client.on('loggedOn', () => {
 })
 ```
 
+#### Modules
+
+Official documentation of the Modules API can be found [here](https://nodejs.org/api/modules.html). I will summarize the points that are important to us here, though.
+
+Consider the following example:
+
+```javascript
+// ./index.js
+const square = require('./square.js') // Note the './' before the filename of the module.
+
+console.log(square(4)) // Outputs 16
+```
+
+```javascript
+// ./square.js
+const square = x => x * x // Note the use of arrow functions and the implicit return, here.
+
+module.exports = square // Export the square function.
+```
+
+You can also install modules made by others, using the node package manager, or `npm`, for short.
+
+To use it simply execute `npm install <module name>` in your working directory, and to use the module you just installed:
+
+```javascript
+const module = require('module name')
+```
+
+All modules are open source, and you can browse them [here](https://www.npmjs.com/search?q=). 
+
+Note that some modules that can be `require`d do not have to be installed, like `readline`, which is a Node core module.
+
+#### Objects
+
+Objects in JavaScript, just as in many other programming languages, can be compared to objects in real life. The concept of objects in JavaScript can be understood with real life, tangible objects.
+
+An object is a standalone entity, with properties and type. Compare it with a cup, for example. A cup is an object, with properties. A cup has a color, a design, weight, a material it is made of, etc. The same way, JavaScript objects can have properties, which define their characteristics.
+
+A JavaScript object has properties associated with it. A property of an object can be explained as a variable that is attached to the object. Object properties are basically the same as ordinary JavaScript variables, except for the attachment to objects. The properties of an object define the characteristics of the object. You access the properties of an object with a simple dot-notation:
+
+`myObject.propertyName`
+
+#### Events and Callbacks
+
+JavaScript is an event-driven language. That's an interesting concept, and since there are many great articles on this I don't really want to spend too much time on it here. 
+
+In the above example we have it easy, since we will not be creating events, just listening to them with the `on()` function of the client object. Which brings us to callbacks, which are yet another very interesting concept to understand. Since it's an integral part to... well, virtually everything in JS, I will attempt to illustrate it.
+
+```javascript
+// Let's say we are performing web-requests here.
+// It always takes some time for the server to respond, so we can't just instantly return a result, we need to wait until we get it.
+function request (url, callback) {
+    let data = null // Do something to get data.
+    setTimeout(5000, callback, data) // This is simulating a server's response time.
+}
+
+request('https://fsoc.space', function (result) { console.log(result) })
+```
+
+`setTimeout(t, f, a)` will call the function `f` after `t` miliseconds with the arguments `a`. After 
+
+This works, because you are passing a function as an argument to another function. The called function then calls the function you passed to it, simply called `callback`, in this example.
+
+If you can pass variables to a function, why not pass functions?
+
+Note that line 8 could be made a lot more beatiful like so:
+
+```javascript
+request('https://fsoc.space', result => console.log(result))
+// Or, if you want to be fancy:
+request('https://fsoc.space', console.log)
+```
+
+Both will print out the result. Do you know why?
+
+`console.log` is just a function in the `console` object that accepts one argument, and prints that one arguemnt. If you pass it as callback it will be called with the result, and print it out.
