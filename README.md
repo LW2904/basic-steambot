@@ -1,115 +1,119 @@
-# An introduction to building Steam Bots and JS as a whole.
+# An introduction to building Steam Bots, and JS as a whole.
 
-This is aimed at complete beginners, but even those who know their way around JS and want to get into building Bots using Steam can benefit from reading this.
+_Or, 'I'll throw some code at your feet and hope you will learn something from it.'_
 
-*To Zen, who motivated and inspired me to write this shit.*
+I say this, because I want to make it clear here that I am not trying to teach you to code properly, look at this as giving you a running start in the never ending journey of learning programming languages. I will (have to) leave out somewehat important bits and pieces, that I hope you will learn as you go.
 
-## Prerequisites
+I want to encourage you to use external resources while reading this document, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice.
 
-I will be using NodeJS v8.0.0, but this should work on any NodeJS version >6. You can get [NodeJS](https://nodejs.org/en/) here, and if you already have it installed you can check your version with `node -v`.
+### The basics
 
-> Node can be used to run JS code in your console using Chrome's V8 JavaScript Engine. It's package ecosystem, npm, is the largest open source library in the world and can be used to instantly download und integrate a plethora of modules into your projects.
+Even I am not cruel enough to expect you to be able to understand some random code, so here goes my take at demistifying this whole thing.
 
-Once you have made sure that node is installed and up-to-date, fire up cmd and navigate into your working directory with `cd X:/path/to/narnia/`.
-Once there, create a file *whatever.js* - the name is up to you but names like *index.js* or *main.js* are common.
-Using your text-editor of choice (personal recommendation: [atom](https://atom.io/)) open up the file and write `console.log('Hello World!')`.
-Now, in your console, write `node yourName.js`. The output should be a single line saying `Hello World!`, after which the script exits.
-Proceed only if you have verified that this works.
+####Browser console
 
-## First log-in
+If you are in a browser, just press __F12__ and switch to the __Console__ tab. This should work in all recent versions of Chrome (Chromium), Firefox, and virtually any browsers that sprang out of those two.
+
+Normally, as a developer, you would be using this tab to view the output of your JS scripts, but we can also use it to type a one-liner, and immediately get a result back, like so:
+
+![GIF](https://i.imgur.com/gfZZD2X.gif)
+
+While this is pretty fun to play around with, and also great to learn new things thanks to the autocompletion suggestions, we want to write bigger, more complex scripts.
+
+Now, we could write a quick website and run our JavaScript via that (which is how it is usually used), but that's a bigger detour than I would like - we are going to use __NodeJS__ ([download](https://nodejs.org/dist/v8.8.1/node-v8.8.1-x64.msi)) to run our code. This will also be convenient later, when we will begin development of the steam bot.
+
+####NodeJS
+
+> Node.js® is a JavaScript runtime built on [Chrome's V8 JavaScript engine](https://developers.google.com/v8/). Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js' package ecosystem, [npm](https://www.npmjs.com/), is the largest ecosystem of open source libraries in the world.
+
+Yes. Got that? No? Well, that's ok. What you need to know is: NodeJS can run JavaScript on your PC, on your mother's laptop, on your server, and probably also on your toaster. It's open source, runs on any modern OS, is backed by the linux foundation, and it's growing very quickly. It is mainly used on servers and as a console application, but through some pretty amazing frameworks, you can also develop sexy desktop and mobile apps with it (*cough* Discord, Atom, ...).
+
+Once you've installed Node, go ahead and fire up a console (fastest way: Win + R, type in 'cmd'; you can just look for 'cmd' in the search tab though), and type `node`.
+
+![](https://i.imgur.com/OiuvB8d.gif)
+
+As you can see, in it's base form, NodeJS is just like the console tab you had open just a minute ago. (Which is not surprising, since it's pretty much the same thing, only built to run standalone.) OK, this  is pretty cool and all, but we want to get into making scripts, that run using NodeJS, don't we? Well, here goes.
+
+#### First scripts
+
+To get started, just create a file in any directory you want and name it `index.js`. The name isn't really important, and this is just a suggestion.
+
+Let's start out with something simple, paste the following snippet into the file:
 
 ```javascript
-const steamUser = require('steam-user')
-
-let client = new steamUser() // Our to-be bot.
-
-client.logOn() // Log on anonymously.                           
-
-client.on('loggedOn', () =>
-  console.log('Logged into steam anonymously.'))
+console.log('elliot')
 ```
-*Note: semicolons in JS are a funny affair, but the rule of thumb is that you can omit them all as long as all statements are followed by a line break - which is what I'm doing here.*
 
-With the above code, we would have an anonymous connection to steam, which we could use to obtain data like steam profiles, or steam store information - anything you could do without an account.
-The next step is logging into an actual account (our bot), but let's first go over the key parts of the above code and the
-technologies that I used:
+Now, run `node index.js` in your console (obviously, replace index.js with whatever you named your file). Predictably, you will see a single line saying 'elliot', after which the script terminates.
 
-### require('steam-user')
-*Require* is a NodeJS-native function which loads a module, in this case it loads `steam-user`. These modules are a key part of NodeJS, and while you can write them yourself, millions of them can be found and installed via the Node Package Manager ([NPM](https://www.npmjs.com/)). `steam-user` is a public module which can be downloaded and installed using NPM:
-`npm install -g steam-user` *The -g tag installs this module globally, omit it if you want the module to be installed locally.*
+Well, that was too easy now, wasn't it? How about this:
 
-That module has a set of *methods* and *properties* as described in it's [documentation](https://github.com/DoctorMcKay/node-steam-user#steamuser) and is our 'gateway' to steam. It was created and is maintained by [DoctorMcKay](https://github.com/DoctorMcKay).
-
-Using the modules constructor function, we initialize an 'empty' SteamUser object as `client`, which - in the future - will be our bot.
-
-### Callbacks
-
-The above code utilizes *callbacks* to achieve *asynchronicity*. It is important to note though, that there isn't a special thing called a 'callback' in the JavaScript language, it's just a convention for using JS functions. Instead of immediately returning some result like most functions, functions that use callbacks take some time to produce a result.
-
-In practice, this means that callbacks allow us to define a function that is executed when a particular operation finishes. In our case we wait for the client to emit the `loggedOn` event after which we execute a function that we pass as the 2nd argument. *More such events can be found in the module docs.*
-
-An example use case:
 ```javascript
-// Create new function execute(function)
-function execute (callback) { setTimeout(callback, 1000) }
-// setTimeout(f, m):
-// executes function f once after m miliseconds
+const name = 'elliot'
 
-execute(function () { console.log('Function finished.') })
-// Output after 1 second (1000ms): Function finished
+function printName (name) {
+    console.log(name)
+}
+
+printName(name)
 ```
 
-It takes a while to grasp, but it's a really simple concept. When you can pass variables why not pass functions?
+This produces the exact same result, but it introcudes two new concepts:
 
-### Arrow functions
+- Variables ([var](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var), [let](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let), [const](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const)), and
+- Functions ([function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))
 
-What might throw off even people who are familiar with JS is the arrow function shorthand (read more here: [MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/Arrow_functions)).
+I've added links to the relevant MDN article(s), respectively - I recommend you at least skim them, you will be using variables and functions all the time. I will not go into detail about these things here, but it is imperative that you understand the use of the above two before continuing.
 
-To better understand arrow functions consider this:
+Things that MDN does not cover (or, at least, only covers insufficiently) are best-practises, in this case it's a best practise to use `const` as often as possible, and to use `let` where it is not. This is to prevent unintended changes of variables that should remain constant, and to improve readability. When you define a `const` it is instantly apparent that it's value *will not change.*
+
 ```javascript
-client.on('loggedOn', () => console.log( ... ))
-// is the same as:
-client.on('loggedOn', () => { console.log( ... ) })
-// which is the same as:
-client.on('loggedOn', function () { console.log( ... ) })
+const name = 'elliot' // Is the unchangeable version of...
+let name = 'elliot' // which is the block scoped version of...
+var name = 'elliot'
 
-// as long as a function only takes one parameter,
-// you can omit the parenthesis
-client.on('loggedOn', details => console.log(details))
+function printName (name) { ... } // Is the same as...
+const printName = function (name) { ... } // which is the same as...
+const printName = (name) => { ... }
 ```
-*Arrow functions are a new technology and part of ES6.*
 
-## Actual log-in
+New thingies!
 
-Now that you are somewhat familiar with the `steam-user` module, we can finally log into steam using an actual account!
+- Comments (nice and basic [guide on comments](https://www.digitalocean.com/community/tutorials/how-to-write-comments-in-javascript))
+- [Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
-I will now throw some code at your feet, but I've commented all the important parts.
+__A note on different ways to declare functions:__ There is no consistent standard on this, and in the end the best option is to just pick a ruleset and stick with it. Consistent code style should be a priority. I personally almost always use `const functionName = (arguments) => { /** code */ }`, but that's really not much more than personal preference (although it's consistent with the best practice of always preferring `const`, functions are not constants by default!).
+
+Still here? OK, let's try something a bit more complex, then.
+
+### The Bot
+
+We will be using __modules__ to create our bot, as it will allow for a very quick and convenient setup. Consider the following code, and note the use of `require`.
 
 ```javascript
 // npm install -g steam-user
-const steamUser = require('steam-user')
+const SteamUser = require('steam-user')
+const Client = new SteamUser()
 
-// No need to install this
+// No need to install this.
 const readline = require('readline').createInterface({
 	input: process.stdin,
   output: process.stdout
 })
 
-let client = new steamUser()
-// We want to handle the code by ourselves.
 client.setOption('promptSteamGuardCode', false)
 
 // Replace the below values with your data,
 // or use the testing account provided by me.
-let accountData = {
+const accountData = {
 	accountName: 'fsoc10',
 	password: '2GFiWQDF4V'
 }
 
 client.logOn(accountData)
 
-// Event which is emmited once steam needs a code
-// Domain is only defined when email is needed
+// Event which is emitted once steam needs a code.
+// Domain is only defined when email is needed.
 client.on('steamGuard', (domain, callback) => {
 	readline.question((domain ? 'EMail' : 'Mobile') + ' code: ', code => {
 		callback(code)
@@ -117,50 +121,11 @@ client.on('steamGuard', (domain, callback) => {
 	})
 })
 
-client.on('error', err => console.log(err))
+client.on('error', console.error)
 
 client.on('loggedOn', () => {
-	console.log('logged on')
-  // Client/Bot is now ready
+   console.log('logged on')
+   // Client/Bot is now ready.
 })
 ```
 
-The only new concept in the above code is the `readline` module, which we use to
-get the email/mobile code. It is a part of the core library and we don't have to
-download it using NPM. The documentation can be found [here](https://nodejs.org/api/readline.html).
-
-If you paid attention while reading the code you will also have noticed the
-*ternary operator* ([MDN](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)).
-
-Consider the following example:
-```javascript
-// condition ? expr1 : expr2 is comparable to
-// if (condition) { epr1 } else { expr2 }
-
-let sunny = false
-console.log('It is ' + (sunny ? 'sunny.' : 'not sunny.'))
-// It is not sunny.
-```
-...and here's the ternary operator in action:
-```javascript
-client.on('steamGuard', (domain, callback) => {
-	readline.question((domain ? 'EMail' : 'Mobile') + ' code: ', code => {
-		callback(code)
-		readline.close()
-	})
-})
-```
-Now, in the above case, the domain variable does only have a value if
-steam requires an email code, and not a mobile code. If steam doesn't need an
-email code the value will be `undefined` which JS treats like `false`.
-
-Therefore, if the domain variable is defined the user is asked to provide
-their email code, else (if the value is undefined) the mobile code is requested.
-
-Some more stuff to read to properly understand the above code and how to re-use it:
-- `node-steam-user` [*events*](https://github.com/DoctorMcKay/node-steam-user#events-) like 'steamGuard' or 'error'
-- the `readline` [documentation](https://nodejs.org/api/readline.html)
-- [this guide](http://callbackhell.com/) to writing async JS
-
-Woo you made it! If you have any feedback hit me up on [steam](http://steamcommunity.com/profiles/76561198091491690)
-so that we can have a chat.
