@@ -8,6 +8,8 @@ I say this, because I want to make it clear here that I am not trying to teach y
 
 __I want to encourage you to use external resources while reading this document__, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice. __By far not everything will be covered here, things will be explained on a 'need to know' basis.__
 
+This document takes a rather unconventional approach to trying to teach one to code, but it is how I learned: by reading working code, reading documentation, and doing lots of googling.  This is certainly not the most efficient approach, but it allows for a lot of freedom and flexibility. Also, in my opinion, the earlier one is exposed to actual production code, best practices and coding conventions, the better.
+
 ## The basics
 
 Even I am not cruel enough to expect you to be able to understand some random code, so here goes my take at demistifying this whole thing.
@@ -173,6 +175,12 @@ class Car {
 }
 ```
 
+---
+
+
+
+This is it. It was really just a summary of what you would have found on MDN, but I wanted there to be at least some guidance in here.
+
 
 
 ## The Bot
@@ -218,6 +226,30 @@ client.on('loggedOn', () => {
    // Any additional code would be placed here, like sending messages or trades.
 })
 ```
+
+OK, so lets walk through this:
+
+1. Get some modules ('steam-user' and 'readline')
+
+2. Set up a readline interface, using the console windows input and output streams.
+
+3. Create a new client object
+
+4. Set the option 'promptSteamGuardCode' to false, more on this in the 'steam-user' docs, but it really just stops steam user from automatically asking you for your code - we want to do this ourselves, and eventually generate the code by ourselves.
+
+5. Log on to steam using the `logOn` function of our client, passing an object with account data as only argument.
+
+6. Now were just waiting for a bunch of events to happen, namely:
+
+   1. __steamGuard__: more on this in the docs, this gets emitted after a logon attempt, when steam needs a steam guard code.
+
+      We handle this by asking the user a 'question', namely asking for either their email or mobile 		code. The callback of the `question` function contains the input of the user, in this case their, code, which we subsequently pass to the callback from 'steamGuard'.
+
+   2. __error__: emitted when something goes wrong. All of these errors are basically fatal, and can't really be solved by the script itself - just log what went wrong and wait for the user to do something about it.
+
+   3. __loggedOn__: Yay, we did it, once this is emitted our client is logged onto steam and we can do all kinds of fun stuff!
+
+This should give you a basic idea of what the code is doing, now onto the theorethical stuff!
 
 ### Modules
 
