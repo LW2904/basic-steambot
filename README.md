@@ -18,7 +18,7 @@ Normally, as a developer, you would be using this tab to view the output of your
 
 ![GIF](https://i.imgur.com/gfZZD2X.gif)
 
-While this is pretty fun to play around with, and also great to learn new things thanks to the autocompletion suggestions, we want to write bigger, more complex scripts.
+While this is pretty fun to play around with, and also great for learning and discovering new things thanks to the autocompletion suggestions, we want to write bigger, more complex scripts.
 
 Now, we could write a quick website and run our JavaScript via that (which is how it is usually used), but that's a bigger detour than I would like - we are going to use __NodeJS__ ([download](https://nodejs.org/dist/v8.8.1/node-v8.8.1-x64.msi)) to run our code. This will also be convenient later, when we will begin development of the steam bot.
 
@@ -97,7 +97,7 @@ const client = new SteamUser()
 
 // No need to install this.
 const readline = require('readline').createInterface({
-	input: process.stdin,
+  input: process.stdin,
   output: process.stdout
 })
 
@@ -204,4 +204,27 @@ request('https://fsoc.space', console.log)
 
 Both will print out the result. Do you know why?
 
-`console.log` is just a function in the `console` object that accepts one argument, and prints that one arguemnt. If you pass it as callback it will be called with the result, and print it out.
+`console.log` is just a function in the `console` object that accepts one argument, and prints that one argument. If you pass it as callback it will be called with the result, and print it out.
+
+### Applying this knowledge
+
+```javascript
+const SteamUser = require('steam-user')
+
+const readline = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
+```
+
+This is requiring two modules, namely the [node-steam-user](https://github.com/DoctorMcKay/node-steam-user) module, which is on npm, and the [readline](https://nodejs.org/api/readline.html) module, which is part of Node.
+
+Both modules are documented well, and by reading their respective documentation you should be able to learn a lot about what the bot script is doing.
+
+We then create a new client
+
+```javascript
+const client = new SteamUser()
+```
+
+by calling it's constructor. Following that, two methods of the SteamUser object, which our `client` is now an instance of, get called: `setOption()` and `logOn()` . Both are in the documentation, I recommend you read that now!
