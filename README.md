@@ -2,9 +2,11 @@
 
 _Or, 'I'll throw some code at your feet and hope you will learn something from it.'_
 
-I say this, because I want to make it clear here that I am not trying to teach you to code properly, look at this as giving you a running start in the never ending journey of learning programming languages. I will (have to) leave out somewehat important bits and pieces, that I hope you will learn as you go.
+Please note that this is an incomplete document __by design__. It's not done yet, so it's even more incomplete, but that's beside the point. 
 
-I want to encourage you to use external resources while reading this document, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice.
+I say this, because I want to make it clear here that I am not trying to teach you to code properly, look at this as giving you a running start, maybe even a motication (who doesn't want to build cool steam bots), in the never ending journey of learning programming languages. I will (have to) leave out somewehat important bits and pieces, that I hope you will learn as you go.
+
+__I want to encourage you to use external resources while reading this document__, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice.
 
 ## The basics
 
@@ -44,7 +46,7 @@ Let's start out with something simple, paste the following snippet into the file
 console.log('elliot')
 ```
 
-Now, run `node index.js` in your console (obviously, replace index.js with whatever you named your file). Predictably, you will see a single line saying 'elliot', after which the script terminates.
+Now, move into the directory you created the file in by doing `cd C:/your/working/directory`, and after that `node index.js` in your console (obviously, replace index.js with whatever you named your file). Predictably, you will see a single line saying 'elliot', after which the script terminates.
 
 Well, that was too easy now, wasn't it? How about this:
 
@@ -84,7 +86,92 @@ New thingies!
 
 __A note on different ways to declare functions:__ There is no consistent standard on this, and in the end the best option is to just pick a ruleset and stick with it. Consistent code style should be a priority. I personally almost always use `const functionName = (arguments) => { /** code */ }`, but that's really not much more than personal preference (although it's consistent with the best practice of always preferring `const`, functions are not constants by default!).
 
-Still here? OK, let's try something a bit more complex, then.
+Still here? OK, with that knowledge you should already be able to read and understand lots of JavaScript, by filling in the gaps you don't know with common sense and MDN. Still, we want you to be able to write this stuff by yourself, don't we?
+
+### Objects
+
+Objects in JavaScript, just as in many other programming languages, can be compared to objects in real life. The concept of objects in JavaScript can be understood with real life, tangible objects.
+
+An object is a standalone entity, with properties and type. Compare it with a car, for example. A car is an object, with properties. A car has a color, a brand, weight, a top speed, etc. The same way, JavaScript objects can have properties, which define their characteristics.
+
+#### Using object initializers
+
+Consider this example:
+
+```javascript
+const car = {
+  color: 'red',
+  make: 'Mercedes Benz', // :^)
+  year: 2013
+  // ...
+}
+```
+
+You would access the _properties_ of this car with a simple dot notation like so:
+
+```javascript
+console.log(car.color) // 'red'
+console.log(car.year) // 2013
+// And so on.
+```
+
+Note that, when not defining the object to be `const`, you can change the properties after creation, also using the dot notation:
+
+```javascript
+let car = { ... }
+
+console.log(car.color) // 'red'
+car.color = 'blue'
+console.log(car.color) // 'blue'
+           
+// You can also do it like this, which is very useful if you only get the name of the property at runtime.
+car['color'] = 'green'
+console.log(car.color) // 'green'
+```
+
+#### Using a constructor function
+
+There are other ways to create objects though, ways which add very interesting functionality, and a touch of _object-oriented programming_ to JavaScript. Consider the following example:
+
+```javascript
+function Car (color, make, year) {
+  this.color = color
+  this.make = make
+  this.year = year
+  // So far so good, nothing really exciting, or different.
+  
+  this.repaint = (newColor) => this.color = newColor
+  // Equivalent to
+  this.repaint = function (newColor) { this.color = newColor }
+}
+
+const car1 = new Car('white', 'nissan', 1997)
+const car2 = new Car('blue', 'mazda', 1996)
+
+console.log(car1.color) // 'white'
+console.log(car2.color) // 'blue'
+
+car1.respray('black')
+console.log(car1.color) // 'black'
+```
+
+This will be extremely useful later on. Our bot, for example will also be such an object.
+
+If you want to be fancy, you also use the new (introduced 2016)  `Class` keyword to do this:
+
+```javascript
+class Car {
+  constructor (color, make, year) {
+      this.color = color
+      this.make = make
+      this.year = year
+  }
+  
+  repaint (newColor) { this.color = newColor }
+}
+```
+
+
 
 ## The Bot
 
@@ -126,6 +213,7 @@ client.on('error', console.error)
 client.on('loggedOn', () => {
    console.log('logged on')
    // Client/Bot is now ready.
+   // Any additional code would be placed here, like sending messages or trades.
 })
 ```
 
@@ -161,16 +249,6 @@ All modules are open source, and you can browse them [here](https://www.npmjs.co
 
 Note that some modules that can be `require`d do not have to be installed, like `readline`, which is a Node core module.
 
-### Objects
-
-Objects in JavaScript, just as in many other programming languages, can be compared to objects in real life. The concept of objects in JavaScript can be understood with real life, tangible objects.
-
-An object is a standalone entity, with properties and type. Compare it with a cup, for example. A cup is an object, with properties. A cup has a color, a design, weight, a material it is made of, etc. The same way, JavaScript objects can have properties, which define their characteristics.
-
-A JavaScript object has properties associated with it. A property of an object can be explained as a variable that is attached to the object. Object properties are basically the same as ordinary JavaScript variables, except for the attachment to objects. The properties of an object define the characteristics of the object. You access the properties of an object with a simple dot-notation:
-
-`myObject.propertyName`
-
 ### Events and Callbacks
 
 JavaScript is an event-driven language. That's an interesting concept, and since there are many great articles on this I don't really want to spend too much time on it here.
@@ -194,7 +272,7 @@ This works, because you are passing a function as an argument to another functio
 
 If you can pass variables to a function, why not pass functions?
 
-Note that line 8 could be made a lot more beatiful like so:
+Note that line 8 could be made a lot more beautiful like so:
 
 ```javascript
 request('https://fsoc.space', result => console.log(result))
@@ -221,10 +299,22 @@ This is requiring two modules, namely the [node-steam-user](https://github.com/D
 
 Both modules are documented well, and by reading their respective documentation you should be able to learn a lot about what the bot script is doing.
 
-We then create a new client
+We then create a new client object: 
 
 ```javascript
 const client = new SteamUser()
 ```
 
-by calling it's constructor. Following that, two methods of the SteamUser object, which our `client` is now an instance of, get called: `setOption()` and `logOn()` . Both are in the documentation, I recommend you read that now!
+by calling it's constructor. Following that, two methods of the SteamUser object, which our `client` is now an instance of, get called: `setOption()` and `logOn()` . Both are in the documentation, I recommend you read that now.
+
+We then listen for _events_. This is also well documented, and the names of the events should be self-explanatory. Note the use of callback functions.
+
+The callback function for the `'steamGuard'` event, uses an operator you do not yet know: The __Conditional__ (ternary) operator. It is used like so: 
+
+```javascript
+let sunny = true
+
+console.log(`It is ${sunny ? '' : 'not'} sunny.`)
+// condition ? expression one, if condition is true : expression two, else
+```
+
