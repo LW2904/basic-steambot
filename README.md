@@ -48,6 +48,8 @@ console.log('elliot')
 
 Now, move into the directory you created the file in by doing `cd C:/your/working/directory`, and after that `node index.js` in your console (obviously, replace index.js with whatever you named your file). Predictably, you will see a single line saying 'elliot', after which the script terminates.
 
+![](https://i.imgur.com/h1vdb4Q.gif)
+
 Well, that was too easy now, wasn't it? How about this:
 
 ```javascript
