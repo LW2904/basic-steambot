@@ -6,7 +6,7 @@ Please note that this is an incomplete document __by design__. It's not done yet
 
 I say this, because I want to make it clear here that I am not trying to teach you to code properly, look at this as giving you a running start, maybe even a motication (who doesn't want to build cool steam bots), in the never ending journey of learning programming languages. I will (have to) leave out somewehat important bits and pieces, that I hope you will learn as you go.
 
-__I want to encourage you to use external resources while reading this document__, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice.
+__I want to encourage you to use external resources while reading this document__, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice. __By far not everything will be covered here, things will be explained on a 'need to know' basis.__
 
 ## The basics
 
