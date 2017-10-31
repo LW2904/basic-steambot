@@ -4,7 +4,7 @@ _Or, 'I'll throw some code at your feet and hope you will learn something from i
 
 Please note that this is an incomplete document __by design__. It's not done yet, so it's even more incomplete, but that's beside the point. 
 
-I say this, because I want to make it clear here that I am not trying to teach you to code properly, look at this as giving you a running start, maybe even a motication (who doesn't want to build cool steam bots), in the never ending journey of learning programming languages. I will (have to) leave out somewehat important bits and pieces, that I hope you will learn as you go.
+I say this, because I want to make it clear here that I am not trying to teach you to code properly, look at this as giving you a running start, maybe even a motivation (who doesn't want to build cool steam bots), in the never ending journey of learning programming languages. I will (have to) leave out important bits and pieces, that I hope you will learn as you go.
 
 __I want to encourage you to use external resources while reading this document__, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice. __By far not everything will be covered here, things will be explained on a 'need to know' basis.__
 
@@ -36,7 +36,7 @@ Once you've installed Node, go ahead and fire up a console (fastest way: Win + R
 
 ![](https://i.imgur.com/OiuvB8d.gif)
 
-As you can see, in it's base form, NodeJS is just like the console tab you had open just a minute ago. (Which is not surprising, since it's pretty much the same thing, only built to run standalone.) OK, this  is pretty cool and all, but we want to get into making scripts, that run using NodeJS, don't we? Well, here goes.
+As you can see, in it's base form, NodeJS is just like the console tab you had open just a minute ago. (Which is not surprising, since it's pretty much the same thing, only built to run standalone.) OK, this is pretty cool and all, but we want to get into making scripts, that run using NodeJS, don't we? Well, here goes.
 
 ### First scripts
 
@@ -88,7 +88,21 @@ New thingies!
 - Comments (nice and basic [guide on comments](https://www.digitalocean.com/community/tutorials/how-to-write-comments-in-javascript))
 - [Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
-__A note on different ways to declare functions:__ There is no consistent standard on this, and in the end the best option is to just pick a ruleset and stick with it. Consistent code style should be a priority. I personally almost always use `const functionName = (arguments) => { /** code */ }`, but that's really not much more than personal preference (although it's consistent with the best practice of always preferring `const`, functions are not constants by default!).
+__A note on different ways to declare functions:__ There is no real standard on this, and in the end the best option is to just pick a ruleset and stick with it. Consistent code style should be a priority. I personally almost always use `const functionName = (arguments) => { /** code */ }`, but that's really not much more than personal preference (although it's consistent with the best practice of always preferring `const`, functions are not constants by default!).
+
+#### Spacing and tabs
+
+The compiler (the thing that translates your code into something that your computer (or toaster) can run) _does not care about spacing or intentation._ Most of the time, it doesn't even care about line breaks. Therefore, any spacing, indentation, or pressing enter (mostly) is only for your own convenience, and for that of those having to read your code. It _increases readability._ If you wanted to, you could write your JS like this:
+
+```javascript
+const fib=(m=10,i=1,s='0,1',a=s.split(',').map(e=>parseInt(e)))=>i<m?fib(m,++i,`${s},${a[a.length-1]+a[a.length-2]}`):a // This _is_ valid, and returns the fibonacci sequence from 0 to m.
+```
+
+It would just be absolutely unreadable. Actually, if you want to take this example a little further, have a look at [this](https://assets-cdn.github.com/assets/github-569a639380f783d5716fe0ceebaf88a5f5995f2380ad467e8e50211aea7792e3.js). This is the javascript that's powering the page you are on right now. It's still valid, but nobody is able to read it, except for the compiler. This is done to _obfuscate_ JS code.
+
+---
+
+
 
 Still here? OK, with that knowledge you should already be able to read and understand lots of JavaScript, by filling in the gaps you don't know with common sense and MDN. Still, we want you to be able to write this stuff by yourself, don't we?
 
@@ -107,7 +121,7 @@ const car = {
   color: 'red',
   make: 'Mercedes Benz', // :^)
   year: 2013
-  // ...
+  // , ...
 }
 ```
 
@@ -161,7 +175,7 @@ console.log(car1.color) // 'black'
 
 This will be extremely useful later on. Our bot, for example will also be such an object.
 
-If you want to be fancy, you also use the new (introduced 2016)  `Class` keyword to do this:
+If you want to be fancy, you could also use the new (introduced 2016)  `class` keyword to do this:
 
 ```javascript
 class Car {
@@ -174,6 +188,8 @@ class Car {
   repaint (newColor) { this.color = newColor }
 }
 ```
+
+Objects that are created through a constructor function (no matter if using the `class` keyword or not) are generally called 'classes'. 
 
 ---
 
@@ -231,23 +247,25 @@ OK, so lets walk through this:
 
 1. Get some modules ('steam-user' and 'readline')
 
-2. Set up a readline interface, using the console windows input and output streams.
+2. Set up a readline interface, using the console windows' input and output streams
 
 3. Create a new client object
 
-4. Set the option 'promptSteamGuardCode' to false, more on this in the 'steam-user' docs, but it really just stops steam user from automatically asking you for your code - we want to do this ourselves, and eventually generate the code by ourselves.
+4. Set the option 'promptSteamGuardCode' to false, more on this in the 'steam-user' docs
 
-5. Log on to steam using the `logOn` function of our client, passing an object with account data as only argument.
+5. Log on to steam using the `logOn` function of our client, passing an object with account data as only argument
 
-6. Now were just waiting for a bunch of events to happen, namely:
+6. Now are just waiting for a bunch of events to happen, namely:
 
    1. __steamGuard__: more on this in the docs, this gets emitted after a logon attempt, when steam needs a steam guard code.
 
-      We handle this by asking the user a 'question', namely asking for either their email or mobile 		code. The callback of the `question` function contains the input of the user, in this case their, code, which we subsequently pass to the callback from 'steamGuard'.
+      We handle this by asking the user a 'question', asking for either their email or mobile code. The callback of the `question` function contains the input of the user, in this case their code, which we subsequently pass to the callback from the event.
 
-   2. __error__: emitted when something goes wrong. All of these errors are basically fatal, and can't really be solved by the script itself - just log what went wrong and wait for the user to do something about it.
+      _This is worded in a weird way, sorry. Working on it. Basically, the callback function has a paramater that is also a function, and serves as a callback to the callback, so to speak._
 
-   3. __loggedOn__: Yay, we did it, once this is emitted our client is logged onto steam and we can do all kinds of fun stuff!
+   2. __error__: emitted when something goes wrong. All of these errors are basically fatal, and can't really be solved by the script itself - just log what went wrong and wait for the programmer (yes, that's you) to do something about it.
+
+   3. __loggedOn__: Yay, we did it, once this is emitted our client is logged onto steam and we can do all kinds of fun things!
 
 This should give you a basic idea of what the code is doing, now onto the theorethical stuff!
 
@@ -266,12 +284,12 @@ console.log(square(4)) // Outputs 16
 
 ```javascript
 // ./square.js
-const square = x => x * x // Note the use of arrow functions and the implicit return, here.
+const square = x => x * x // Note the use of arrow functions and the implicit return here.
 
 module.exports = square // Export the square function.
 ```
 
-You can also install modules made by others, using the node package manager, or `npm`, for short.
+You can also install modules made by others, using the node package manager, `npm`  for short.
 
 To use it simply execute `npm install <module name>` in your working directory, and to use the module you just installed:
 
@@ -287,13 +305,13 @@ Note that some modules that can be `require`d do not have to be installed, like 
 
 JavaScript is an event-driven language. That's an interesting concept, and since there are many great articles on this I don't really want to spend too much time on it here.
 
-In the above example we have it easy, since we will not be creating events, just listening to them with the `on()` function of the client object. Which brings us to callbacks, which are yet another very interesting concept to understand. Since it's an integral part to... well, virtually everything in JS, I will attempt to illustrate it.
+In the above example we have it easy, since we will not be creating events, just listening to them with the `on()` function of the client object. Which brings us to callbacks, which are yet another very interesting concept to understand. Since it's an integral part to... well, virtually everything in JS, I will attempt to illustrate it here.
 
 ```javascript
 // Let's say we are performing web-requests here.
 // It always takes some time for the server to respond, so we can't just instantly return a result, we need to wait until we get it.
 function request (url, callback) {
-    let data = null // Do something to get data.
+    let data = null // Do something to get data send.
     setTimeout(5000, callback, data) // This is simulating a server's response time.
 }
 
@@ -304,7 +322,7 @@ request('https://fsoc.space', function (result) { console.log(result) })
 
 This works, because you are passing a function as an argument to another function. The called function then calls the function you passed to it, simply called `callback`, in this example.
 
-If you can pass variables to a function, why not pass functions?
+__If you can pass variables to a function, why not pass functions?__
 
 Note that line 8 could be made a lot more beautiful like so:
 
@@ -352,3 +370,4 @@ console.log(`It is ${sunny ? '' : 'not'} sunny.`)
 // condition ? expression one, if condition is true : expression two, else
 ```
 
+_Maybe more will get added here, at some point. I'm not really happy with the way this ends, right now._
