@@ -6,13 +6,13 @@ Please note that this is an incomplete document __by design__. It's not done yet
 
 I say this, because I want to make it clear here that I am not trying to teach you to code properly, look at this as giving you a running start, maybe even a motivation (who doesn't want to build cool steam bots), in the never ending journey of learning programming languages. I will (have to) leave out important bits and pieces, that I hope you will learn as you go.
 
-__I want to encourage you to use external resources while reading this document__, namely the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) - their JS references are excellent. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice. __By far not everything will be covered here, things will be explained on a 'need to know' basis.__
+__I want to encourage you to use external resources while reading this document__, like the [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript) (Mozilla Developer Network) JS reference. Since their site is structured somewhat akwardly, it is probably the fastest to just search for 'MDN string/array/operators/whatever' in your search engine of choice. __By far not everything will be covered here, most things will be explained as they are introduced through actual code.__
 
-This document takes a rather unconventional approach to trying to teach one to code, but it is how I learned: by reading working code, reading documentation, and doing lots of googling.  This is certainly not the most efficient approach, but it allows for a lot of freedom and flexibility. Also, in my opinion, the earlier one is exposed to actual production code, best practices and coding conventions, the better.
+This document takes a rather unconventional approach to trying to teach one to program, but it is how I learned: by reading working code, reading documentation, and doing lots of googling.  This is probably not the most efficient approach, but it allows for a lot of freedom and flexibility. Also, in my opinion, the earlier one is exposed to actual production code (and therefore best practices, consistent structure, etc.), the better.
 
 ## The basics
 
-Even I am not cruel enough to expect you to be able to understand some random code, so here goes my take at demistifying this whole thing.
+This is my take at demystifying this whole thing. Code's just code, there's nothing particularly special or magical about it.
 
 ### Browser console
 
@@ -71,10 +71,10 @@ This produces the exact same result, but it introcudes two new concepts:
 
 I've added links to the relevant MDN article(s), respectively - I recommend you at least skim them, you will be using variables and functions all the time. I will not go into detail about these things here, but it is imperative that you understand the use of the above two before continuing.
 
-Things that MDN does not cover (or, at least, only covers insufficiently) are best-practices, in this case it's a best practise to use `const` as often as possible, and to use `let` where it is not. This is to prevent unintended changes of variables that should remain constant, and to improve readability. When you define a `const` it is instantly apparent that it's value *will not change.*
+Things that MDN does not cover (or, at least, only covers insufficiently) are best practices, in this case it's a best practise to use `const` as often as possible, and to use `let` where it's not. This is to prevent unintended changes of variables that should remain constant, and to improve readability. When you define a `const` it is instantly apparent that it's value *will not change*.
 
 ```javascript
-const name = 'elliot' // Is the unchangeable version of...
+const name = 'elliot' // Is the immutable version of...
 let name = 'elliot' // which is the block scoped version of...
 var name = 'elliot'
 
@@ -83,22 +83,41 @@ const printName = function (name) { ... } // which is the same as...
 const printName = (name) => { ... }
 ```
 
+To demonstrate...
+
+```javascript
+const pi = 3.14
+
+pi = 3 // TypeError: Assignment to constant variable.
+
+const someFunction = () => {}
+
+someFunction = 'whatever' // TypeError: ...
+
+// But!
+
+function someOtherFunction () { ... } // Works just fine. (Which is a bad thing.)
+
+someOtherFunction = 'whatever'
+```
+
 New thingies!
 
 - Comments (nice and basic [guide on comments](https://www.digitalocean.com/community/tutorials/how-to-write-comments-in-javascript))
 - [Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
 
-__A note on different ways to declare functions:__ There is no real standard on this, and in the end the best option is to just pick a ruleset and stick with it. Consistent code style should be a priority. I personally almost always use `const functionName = (arguments) => { /** code */ }`, but that's really not much more than personal preference (although it's consistent with the best practice of always preferring `const`, functions are not constants by default!).
+__A note on different ways to declare functions:__ There is no real standard on this, and in the end the best option is to just pick a ruleset and stick with it. Consistent code style should be a priority. I personally almost always use `const functionName = (arguments) => { /* code */ }`, but that's really not much more than personal preference (although it's consistent with the best practice of always preferring `const`, functions are not constants by default as shown above!).
 
 #### Spacing and tabs
 
-The compiler (the thing that translates your code into something that your computer (or toaster) can run) _does not care about spacing or intentation._ Most of the time, it doesn't even care about line breaks. Therefore, any spacing, indentation, or pressing enter (mostly) is only for your own convenience, and for that of those having to read your code. It _increases readability._ If you wanted to, you could write your JS like this:
+The interpreter (the thing that translates your code into something that your computer (or toaster) can run) _does not care about spacing or intentation_. Most of the time, it doesn't even care about line breaks. Therefore, any spacing, indentation, or pressing enter (mostly) is only for your own convenience, and for that of those having to read your code. It _increases readability._ If you wanted to, you could write your JS like this:
 
 ```javascript
-const fib=(m=10,i=1,s='0,1',a=s.split(',').map(e=>parseInt(e)))=>i<m?fib(m,++i,`${s},${a[a.length-1]+a[a.length-2]}`):a // This _is_ valid, and returns the fibonacci sequence from 0 to m.
+// This _is_ valid, and returns the fibonacci sequence from 0 to m.
+const fib=(m=10,i=1,s='0,1',a=s.split(',').map(e=>parseInt(e)))=>i<m?fib(m,++i,`${s},${a[a.length-1]+a[a.length-2]}`):a 
 ```
 
-It would just be absolutely unreadable. Actually, if you want to take this example a little further, have a look at [this](https://assets-cdn.github.com/assets/github-569a639380f783d5716fe0ceebaf88a5f5995f2380ad467e8e50211aea7792e3.js). This is the javascript that's powering the page you are on right now. It's still valid, but nobody is able to read it, except for the compiler. This is done to _obfuscate_ JS code.
+It would just be absolutely unreadable. Actually, if you want to take this example a little further, have a look at [this](https://assets-cdn.github.com/assets/github-569a639380f783d5716fe0ceebaf88a5f5995f2380ad467e8e50211aea7792e3.js). This is the javascript that's powering the page you are on right now. It's still valid, but nobody is able to read it, except for the interpreter. This is done to _obfuscate_ JS code.
 
 ---
 
@@ -119,7 +138,7 @@ Consider this example:
 ```javascript
 const car = {
   color: 'red',
-  make: 'Mercedes Benz', // :^)
+  make: 'Mercedes Benz',
   year: 2013
   // , ...
 }
@@ -133,15 +152,15 @@ console.log(car.year) // 2013
 // And so on.
 ```
 
-Note that, when not defining the object to be `const`, you can change the properties after creation, also using the dot notation:
+Note that you can change the properties after creation, also using the dot notation, even if you declared it as `const`:
 
 ```javascript
-let car = { ... }
+const car = { ... }
 
 console.log(car.color) // 'red'
 car.color = 'blue'
 console.log(car.color) // 'blue'
-           
+
 // You can also do it like this, which is very useful if you only get the name of the property at runtime.
 car['color'] = 'green'
 console.log(car.color) // 'green'
@@ -160,7 +179,7 @@ function Car (color, make, year) {
   
   this.repaint = (newColor) => this.color = newColor
   // Equivalent to
-  this.repaint = function (newColor) { this.color = newColor }
+  // this.repaint = function (newColor) { this.color = newColor }
 }
 
 const car1 = new Car('white', 'nissan', 1997)
@@ -175,7 +194,7 @@ console.log(car1.color) // 'black'
 
 This will be extremely useful later on. Our bot, for example will also be such an object.
 
-If you want to be fancy, you could also use the new (introduced 2016)  `class` keyword to do this:
+If you want to be fancy, you could also use the new (introduced in 2016) `class` keyword to do this:
 
 ```javascript
 class Car {
@@ -196,8 +215,6 @@ Objects that are created through a constructor function (no matter if using the 
 
 
 This is it. It was really just a summary of what you would have found on MDN, but I wanted there to be at least some guidance in here.
-
-
 
 ## The Bot
 
@@ -228,12 +245,15 @@ client.logOn(accountData)
 // Event which is emitted once steam needs a code.
 // Domain is only defined when email is needed.
 client.on('steamGuard', (domain, callback) => {
-	readline.question((domain ? `EMail (@${domain})` : 'Mobile') + ' code: ', code => {
+	const question = (domain ? `Mail (@${domain})` : 'Mobile') + ' code: '
+
+	readline.question(question, (code) => {
 		callback(code)
 		readline.close()
 	})
 })
 
+// Log any errors that we might get.
 client.on('error', console.error)
 
 client.on('loggedOn', () => {
